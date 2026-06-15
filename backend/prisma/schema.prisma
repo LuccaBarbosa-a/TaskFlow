@@ -1,0 +1,54 @@
+// TaskFlow — schema do banco de dados (PostgreSQL via Prisma)
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Priority {
+  alta
+  media
+  baixa
+}
+
+enum Category {
+  faculdade
+  trabalho
+  pessoal
+}
+
+enum Status {
+  pendente
+  em_andamento
+  concluida
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  tasks     Task[]
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String    @default("")
+  priority    Priority  @default(media)
+  category    Category  @default(pessoal)
+  status      Status    @default(pendente)
+  due_date    DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+}
