@@ -253,19 +253,17 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        {stats.concluidas > 0 && (
-          <button className={styles.clearBtn} onClick={handleDeleteConcluidas}>
-            Limpar concluídas ({stats.concluidas})
-          </button>
-        )}
-
-        <div style={{ marginTop: 8 }}>
+        <div className={styles.sidebarBottom}>
+          {stats.concluidas > 0 && (
+            <button className={styles.clearBtn} onClick={handleDeleteConcluidas}>
+              Limpar concluídas ({stats.concluidas})
+            </button>
+          )}
           <ThemeToggle />
+          <button className={styles.logoutBtn} onClick={logout}>
+            Sair da conta
+          </button>
         </div>
-
-        <button className={styles.logoutBtn} onClick={logout}>
-          Sair da conta
-        </button>
       </aside>
 
       {/* MAIN */}

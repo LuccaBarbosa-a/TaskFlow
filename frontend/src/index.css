@@ -1,60 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --purple:     #5C3BCC;
-  --purple-lt:  #EEEDFE;
-  --purple-md:  #7F5FE0;
-  --teal:       #0F6E56;
-  --teal-lt:    #E1F5EE;
-  --amber:      #854F0B;
-  --amber-lt:   #FAEEDA;
-  --pink:       #993556;
-  --pink-lt:    #FBEAF0;
-  --red:        #C0392B;
-  --red-lt:     #FDECEA;
-  --gray-50:    #F8F7F4;
-  --gray-100:   #F0EFE9;
-  --gray-200:   #DEDCD6;
-  --gray-400:   #9E9D98;
-  --gray-600:   #5F5E5A;
-  --gray-800:   #2C2C2A;
+  --purple:     #6C47FF;
+  --purple-lt:  #EEE9FF;
+  --purple-md:  #8A68FF;
+  --purple-dk:  #4B2FCC;
+  --teal:       #00B37E;
+  --teal-lt:    #DCFAF0;
+  --amber:      #E07B00;
+  --amber-lt:   #FFF3DC;
+  --pink:       #E83E6C;
+  --pink-lt:    #FFEAF1;
+  --red:        #E03E3E;
+  --red-lt:     #FFEAEA;
+  --gray-50:    #F5F4F8;
+  --gray-100:   #ECEAF2;
+  --gray-200:   #D9D6E6;
+  --gray-400:   #9B97B2;
+  --gray-600:   #605C7E;
+  --gray-800:   #2A2640;
   --white:      #FFFFFF;
-  --text:       #1A1A1A;
-  --text-sec:   #5F5E5A;
-  --radius-sm:  6px;
-  --radius-md:  10px;
-  --radius-lg:  14px;
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md:  0 4px 16px rgba(0,0,0,0.10);
-  --transition: 0.15s ease;
+  --text:       #1A1730;
+  --text-sec:   #605C7E;
+
+  --sidebar-bg:     linear-gradient(180deg, #1A1040 0%, #261558 60%, #1E103A 100%);
+  --sidebar-text:   #E8E0FF;
+  --sidebar-sec:    #9B8FCC;
+  --sidebar-border: rgba(255,255,255,0.08);
+  --sidebar-hover:  rgba(255,255,255,0.07);
+  --sidebar-active: rgba(255,255,255,0.13);
+
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  18px;
+  --radius-xl:  24px;
+  --shadow-sm:  0 1px 4px rgba(80,40,180,0.08);
+  --shadow-md:  0 4px 20px rgba(80,40,180,0.13);
+  --shadow-lg:  0 8px 40px rgba(80,40,180,0.18);
+  --transition: 0.18s ease;
+
   font-family: 'Inter', system-ui, sans-serif;
 }
 
-/* Tema escuro — ativado via data-theme="dark" no <html>.
-   --white passa a representar "superficie do cartao" e --gray-50 o fundo. */
 [data-theme="dark"] {
-  --purple:     #A892FF;
-  --purple-lt:  #2B2548;
-  --purple-md:  #B7A4FF;
-  --teal:       #5DD9B5;
-  --teal-lt:    #15302A;
-  --amber:      #F5B742;
-  --amber-lt:   #3A2A14;
-  --pink:       #F08FB4;
-  --pink-lt:    #3A1F2A;
-  --red:        #FF8B7A;
-  --red-lt:     #3A1A1A;
-  --gray-50:    #0F0E13;
-  --gray-100:   #1F1D26;
-  --gray-200:   #3A3845;
-  --gray-400:   #8B8896;
-  --gray-600:   #B8B5C2;
-  --gray-800:   #E5E3EC;
-  --white:      #1A1820;
-  --text:       #F0EEF6;
-  --text-sec:   #B8B5C2;
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.5);
-  --shadow-md:  0 4px 16px rgba(0,0,0,0.6);
+  --purple:     #A88EFF;
+  --purple-lt:  #2A1F55;
+  --purple-md:  #BBA8FF;
+  --purple-dk:  #7B5FFF;
+  --teal:       #4EDEA8;
+  --teal-lt:    #0F2E22;
+  --amber:      #FFBC45;
+  --amber-lt:   #2E1F00;
+  --pink:       #FF7BAA;
+  --pink-lt:    #3A0F22;
+  --red:        #FF7070;
+  --red-lt:     #3A0F0F;
+  --gray-50:    #0D0B18;
+  --gray-100:   #17152A;
+  --gray-200:   #2E2A46;
+  --gray-400:   #7B77A0;
+  --gray-600:   #B0ABCC;
+  --gray-800:   #E8E4FF;
+  --white:      #1A1730;
+  --text:       #EDE8FF;
+  --text-sec:   #B0ABCC;
+
+  --sidebar-bg:     linear-gradient(180deg, #0D0B18 0%, #150E30 60%, #100C22 100%);
+  --sidebar-text:   #D8D0FF;
+  --sidebar-sec:    #7B77A0;
+  --sidebar-border: rgba(255,255,255,0.06);
+  --sidebar-hover:  rgba(255,255,255,0.05);
+  --sidebar-active: rgba(168,142,255,0.18);
+
+  --shadow-sm:  0 1px 4px rgba(0,0,0,0.5);
+  --shadow-md:  0 4px 20px rgba(0,0,0,0.6);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.7);
   color-scheme: dark;
 }
 
@@ -63,47 +85,46 @@ body {
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 button { cursor: pointer; font-family: inherit; }
 input, textarea, select { font-family: inherit; }
 a { text-decoration: none; color: inherit; }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--gray-100); }
-::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
 
-/* Animations */
-@keyframes fadeIn  { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeIn  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes spin    { to { transform: rotate(360deg); } }
+@keyframes pulse   { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-.fade-in  { animation: fadeIn  0.25s ease; }
-.slide-in { animation: slideIn 0.2s  ease; }
+.fade-in  { animation: fadeIn  0.28s cubic-bezier(.22,.68,0,1.2); }
+.slide-in { animation: slideIn 0.22s ease; }
 
-/* Spinner */
 .spinner {
   width: 20px; height: 20px;
-  border: 2px solid var(--gray-200);
+  border: 2.5px solid var(--gray-200);
   border-top-color: var(--purple);
   border-radius: 50%;
-  animation: spin 0.6s linear infinite;
+  animation: spin 0.7s linear infinite;
 }
 
-/* Toast notifications */
 .toast-container {
-  position: fixed; top: 1rem; right: 1rem; z-index: 9999;
-  display: flex; flex-direction: column; gap: 8px;
+  position: fixed; top: 1.25rem; right: 1.25rem; z-index: 9999;
+  display: flex; flex-direction: column; gap: 10px;
 }
 .toast {
-  padding: 12px 16px; border-radius: var(--radius-md);
+  padding: 13px 18px; border-radius: var(--radius-md);
   font-size: 14px; font-weight: 500;
-  box-shadow: var(--shadow-md);
-  animation: fadeIn 0.2s ease;
-  max-width: 320px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn 0.22s ease;
+  max-width: 340px;
+  border-left: 3px solid currentColor;
 }
-.toast.success { background: var(--teal-lt);  color: var(--teal); }
-.toast.error   { background: var(--red-lt);   color: var(--red);  }
+.toast.success { background: var(--teal-lt);  color: var(--teal);   }
+.toast.error   { background: var(--red-lt);   color: var(--red);    }
 .toast.info    { background: var(--purple-lt); color: var(--purple); }
