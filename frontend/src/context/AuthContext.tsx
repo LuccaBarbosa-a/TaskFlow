@@ -21,9 +21,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const storedUser = localStorage.getItem('taskflow_user');
     const storedToken = localStorage.getItem('taskflow_token');
     if (storedUser && storedToken) {
-      setUser(JSON.parse(storedUser) as User);
+      try {
+        setUser(JSON.parse(storedUser) as User);
+      } catch {
+        localStorage.removeItem('taskflow_user');
+        localStorage.removeItem('taskflow_token');
+      }
     }
     setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    const handler = () => setUser(null);
+    window.addEventListener('taskflow:logout', handler);
+    return () => window.removeEventListener('taskflow:logout', handler);
   }, []);
 
   async function login(email: string, password: string): Promise<User> {

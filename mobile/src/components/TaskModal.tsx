@@ -89,6 +89,7 @@ export default function TaskModal({ visible, task, onSave, onClose }: TaskModalP
   const [priority, setPriority] = useState<Priority>('media');
   const [category, setCategory] = useState<Category>('pessoal');
   const [status, setStatus] = useState<Status>('pendente');
+  const [dueDate, setDueDate] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -98,12 +99,14 @@ export default function TaskModal({ visible, task, onSave, onClose }: TaskModalP
       setPriority(task.priority || 'media');
       setCategory(task.category || 'pessoal');
       setStatus(task.status || 'pendente');
+      setDueDate(task.due_date ? task.due_date.slice(0, 10) : null);
     } else {
       setTitle('');
       setDescription('');
       setPriority('media');
       setCategory('pessoal');
       setStatus('pendente');
+      setDueDate(null);
     }
   }, [task, visible]);
 
@@ -111,7 +114,7 @@ export default function TaskModal({ visible, task, onSave, onClose }: TaskModalP
     if (!title.trim()) return;
     setSaving(true);
     try {
-      await onSave({ title: title.trim(), description, priority, category, status });
+      await onSave({ title: title.trim(), description, priority, category, status, due_date: dueDate });
     } finally {
       setSaving(false);
     }

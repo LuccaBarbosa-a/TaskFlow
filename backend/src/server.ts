@@ -34,8 +34,16 @@ const authLimiter = rateLimit({
   message: { error: 'Muitas tentativas. Tente novamente em alguns minutos.' },
 });
 
+const tasksLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 120,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Muitas requisicoes. Tente novamente em breve.' },
+});
+
 app.use('/api/auth', authLimiter, authRoutes);
-app.use('/api/tasks', tasksRoutes);
+app.use('/api/tasks', tasksLimiter, tasksRoutes);
 
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', message: 'TaskFlow API rodando!', timestamp: new Date().toISOString() });

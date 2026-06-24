@@ -16,12 +16,18 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
+let onUnauthorized: (() => void) | null = null;
+export function setUnauthorizedCallback(cb: () => void): void {
+  onUnauthorized = cb;
+}
+
 api.interceptors.response.use(
   (res) => res,
   async (err) => {
     if (axios.isAxiosError(err) && (err.response?.status === 401 || err.response?.status === 403)) {
       await SecureStore.deleteItemAsync('taskflow_token');
       await SecureStore.deleteItemAsync('taskflow_user');
+      onUnauthorized?.();
     }
     return Promise.reject(err);
   },

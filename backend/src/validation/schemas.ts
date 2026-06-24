@@ -18,7 +18,16 @@ export const loginSchema = z.object({
 const dueDate = z
   .union([z.string(), z.null()])
   .optional()
-  .transform((v) => (v === undefined ? undefined : v === null ? null : new Date(v)));
+  .transform((v, ctx) => {
+    if (v === undefined) return undefined;
+    if (v === null) return null;
+    const d = new Date(v);
+    if (isNaN(d.getTime())) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Data invalida.' });
+      return z.NEVER;
+    }
+    return d;
+  });
 
 export const createTaskSchema = z.object({
   title: z.string().trim().min(1, 'O titulo da tarefa e obrigatorio.'),

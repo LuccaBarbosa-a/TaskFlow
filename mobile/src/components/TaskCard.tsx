@@ -18,9 +18,14 @@ interface TaskCardProps {
   onDelete: (id: string) => void;
 }
 
+function parseLocalDate(str: string): Date {
+  const [year, month, day] = str.slice(0, 10).split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+
 function formatDate(str: string | null): string | null {
   if (!str) return null;
-  return new Date(str).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+  return parseLocalDate(str).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
 }
 
 export default function TaskCard({ task, onStatusChange, onEdit, onDelete }: TaskCardProps) {
@@ -34,7 +39,7 @@ export default function TaskCard({ task, onStatusChange, onEdit, onDelete }: Tas
   const status = STATUS[task.status] ?? STATUS.pendente;
   const isDone = task.status === 'concluida';
 
-  const isOverdue = !!task.due_date && !isDone && new Date(task.due_date) < new Date();
+  const isOverdue = !!task.due_date && !isDone && parseLocalDate(task.due_date) < new Date();
 
   function confirmDelete(): void {
     Alert.alert('Deletar tarefa', `Tem certeza que deseja remover "${task.title}"?`, [
