@@ -90,18 +90,15 @@ router.put('/:id', async (req: Request, res: Response) => {
       return res.status(400).json({ error: parsed.error.issues[0].message });
     }
 
-    const existing = await prisma.task.findFirst({
-      where: { id: req.params.id, userId: req.userId },
+    const result = await prisma.task.updateMany({
+      where: { id: req.params.id, userId: req.userId as string },
+      data: parsed.data,
     });
-    if (!existing) {
+    if (result.count === 0) {
       return res.status(404).json({ error: 'Tarefa nao encontrada.' });
     }
 
-    const task = await prisma.task.update({
-      where: { id: req.params.id },
-      data: parsed.data,
-    });
-
+    const task = await prisma.task.findUnique({ where: { id: req.params.id } });
     return res.json({ message: 'Tarefa atualizada!', task });
   } catch (err) {
     console.error(err);
@@ -116,18 +113,15 @@ router.patch('/:id/status', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Status invalido.' });
     }
 
-    const existing = await prisma.task.findFirst({
-      where: { id: req.params.id, userId: req.userId },
+    const result = await prisma.task.updateMany({
+      where: { id: req.params.id, userId: req.userId as string },
+      data: { status: parsed.data.status },
     });
-    if (!existing) {
+    if (result.count === 0) {
       return res.status(404).json({ error: 'Tarefa nao encontrada.' });
     }
 
-    const task = await prisma.task.update({
-      where: { id: req.params.id },
-      data: { status: parsed.data.status },
-    });
-
+    const task = await prisma.task.findUnique({ where: { id: req.params.id } });
     return res.json({ message: 'Status atualizado!', task });
   } catch (err) {
     console.error(err);
@@ -149,14 +143,12 @@ router.delete('/concluidas', async (req: Request, res: Response) => {
 
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
-    const existing = await prisma.task.findFirst({
-      where: { id: req.params.id, userId: req.userId },
+    const result = await prisma.task.deleteMany({
+      where: { id: req.params.id, userId: req.userId as string },
     });
-    if (!existing) {
+    if (result.count === 0) {
       return res.status(404).json({ error: 'Tarefa nao encontrada.' });
     }
-
-    await prisma.task.delete({ where: { id: req.params.id } });
     return res.json({ message: 'Tarefa deletada!' });
   } catch (err) {
     console.error(err);

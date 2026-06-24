@@ -19,6 +19,7 @@ api.interceptors.response.use(
     if (axios.isAxiosError(err) && (err.response?.status === 401 || err.response?.status === 403)) {
       localStorage.removeItem('taskflow_token');
       localStorage.removeItem('taskflow_user');
+      window.dispatchEvent(new Event('taskflow:logout'));
       window.location.href = '/login';
     }
     return Promise.reject(err);

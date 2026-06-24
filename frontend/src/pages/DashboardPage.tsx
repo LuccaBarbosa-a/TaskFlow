@@ -33,9 +33,9 @@ export default function DashboardPage() {
   const [filters, setFilters] = useState<TaskFilters>(EMPTY_FILTERS);
   const [searchInput, setSearchInput] = useState('');
 
-  const fetchTasks = useCallback(async () => {
+  const fetchTasks = useCallback(async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       const params: Record<string, string> = {};
       if (filters.priority) params.priority = filters.priority;
       if (filters.category) params.category = filters.category;
@@ -47,7 +47,7 @@ export default function DashboardPage() {
     } catch {
       toast.error('Erro ao carregar tarefas.');
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   }, [filters, toast]);
 
@@ -69,11 +69,10 @@ export default function DashboardPage() {
 
   async function handleStatusChange(id: string, status: Status): Promise<void> {
     try {
-      const res = await taskService.updateStatus(id, status);
-      setTasks((prev) => prev.map((t) => (t.id === id ? res.data.task : t)));
+      await taskService.updateStatus(id, status);
       if (status === 'concluida') toast.success('Tarefa concluída! ✓');
       else toast.info('Status atualizado.');
-      void fetchTasks();
+      void fetchTasks(true);
     } catch {
       toast.error('Erro ao atualizar status.');
     }
@@ -82,9 +81,8 @@ export default function DashboardPage() {
   async function handleDelete(id: string): Promise<void> {
     try {
       await taskService.delete(id);
-      setTasks((prev) => prev.filter((t) => t.id !== id));
       toast.success('Tarefa removida.');
-      void fetchTasks();
+      void fetchTasks(true);
     } catch {
       toast.error('Erro ao deletar tarefa.');
     }

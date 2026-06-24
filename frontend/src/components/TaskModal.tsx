@@ -26,6 +26,13 @@ export default function TaskModal({ task, onSave, onClose }: TaskModalProps) {
       setCategory(task.category || 'pessoal');
       setStatus(task.status || 'pendente');
       setDueDate(task.due_date ? task.due_date.slice(0, 10) : '');
+    } else {
+      setTitle('');
+      setDescription('');
+      setPriority('media');
+      setCategory('pessoal');
+      setStatus('pendente');
+      setDueDate('');
     }
   }, [task]);
 
@@ -109,7 +116,7 @@ export default function TaskModal({ task, onSave, onClose }: TaskModalProps) {
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                min={new Date().toISOString().split('T')[0]}
+                min={task ? undefined : new Date().toISOString().split('T')[0]}
               />
             </div>
           </div>

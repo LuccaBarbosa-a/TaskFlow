@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import { authService } from '../services/api';
+import { authService, setUnauthorizedCallback } from '../services/api';
 import type { User } from '../types';
 
 interface AuthContextValue {
@@ -31,6 +31,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     }
     void loadUser();
+  }, []);
+
+  useEffect(() => {
+    setUnauthorizedCallback(() => { void logout(); });
   }, []);
 
   async function login(email: string, password: string): Promise<User> {

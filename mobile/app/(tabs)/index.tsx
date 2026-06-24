@@ -97,7 +97,9 @@ export default function TasksScreen() {
   useEffect(() => {
     const timer = setTimeout(() => void fetchTasks(), search ? 400 : 0);
     return () => clearTimeout(timer);
-  }, [fetchTasks, search]);
+    // fetchTasks já fecha sobre `search` via useCallback — não duplicar aqui
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchTasks]);
 
   const isFirstFocus = useRef(true);
   useFocusEffect(
